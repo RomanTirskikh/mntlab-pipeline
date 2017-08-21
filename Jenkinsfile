@@ -35,11 +35,11 @@ node(env.SLAVE) {
    	stage ('Packaging and Publishing results'){
 		sh 'tar -xf rtirskikh_dsl_script.tar.gz'
 		sh 'tar -czf rtirskikh-"${BUILD_NUMBER}".tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
-		sh 'curl -v -u admin:admin123 --upload-file rtirskikh-${BUILD_NUMBER}.tar.gz http://localhost:8081/nexus/content/repositories/releases/'rtirskikh'-${BUILD_NUMBER}.tar.gz'
+		sh 'curl -v -u admin:admin123 --upload-file rtirskikh-${BUILD_NUMBER}.tar.gz http://localhost:8081/nexus/content/repositories/releases/rtirskikh-${BUILD_NUMBER}.tar.gz'
 		}
 
 	stage ('Asking for manual approval'){
-		input 'Deploy or Abort?'
+    	input 'Deploy or Abort?'
 	}
 
 	stage ('Deployment'){
