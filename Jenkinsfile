@@ -1,5 +1,4 @@
 node(env.SLAVE) {
-
 	//env.PATH=env.PATH+":/opt/gradle-4.0/bin:/opt/groovy/groovy-2.3.0-beta-2/bin"
 	stage('Preparation (Checking out)') {
 		git branch: 'rtirskikh', url: 'https://github.com/RomanTirskikh/mntlab-pipeline.git'
@@ -36,9 +35,8 @@ node(env.SLAVE) {
    	stage ('Packaging and Publishing results'){
 		sh 'tar -xf rtirskikh_dsl_script.tar.gz'
 		sh 'tar -czf rtirskikh-"${BUILD_NUMBER}".tar.gz jobs.groovy Jenkinsfile -C build/libs/ gradle-simple.jar'
-		//nexusArtifactUploader artifacts: [[artifactId: "${BUILD_NUMBER}", classifier: 'tar.gz', file: '/target/pipeline-rtirskikh-"${BUILD_NUMBER}".tar.gz', type: "${BUILD_NUMBER}"]], credentialsId: 'admin', groupId: 'groupid', nexusUrl: '192.168.56.51:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'artifact', version: 'release'
-		sh 'groovy upload_download.groovy upload rtirskikh-${BUILD_NUMBER}.tar.gz'
-	}
+		sh 'curl -v -u admin:admin123 --upload-file rtirskikh-${BUILD_NUMBER}.tar.gz http://localhost/nexus/content/repositories/releases/'rtirskikh'-${BUILD_NUMBER}.tar.gz'
+		}
 
 	stage ('Asking for manual approval'){
 		input 'Deploy or Abort?'
