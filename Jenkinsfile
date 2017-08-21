@@ -1,4 +1,5 @@
 node(env.SLAVE) {
+
 	//env.PATH=env.PATH+":/opt/gradle-4.0/bin:/opt/groovy/groovy-2.3.0-beta-2/bin"
 	stage('Preparation (Checking out)') {
 		git branch: 'rtirskikh', url: 'https://github.com/RomanTirskikh/mntlab-pipeline.git'
